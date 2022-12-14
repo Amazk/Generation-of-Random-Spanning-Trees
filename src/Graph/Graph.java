@@ -1,49 +1,56 @@
 package Graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-
+import java.util.Random;
 
 public class Graph {
-    // classe de graphe non orientés permettant de manipuler
-    // en même temps des arcs (orientés)
-    // pour pouvoir stocker un arbre couvrant, en plus du graphe
-
     public int order;
-    int edgeCardinality;
+    public int edgeCardinality;
+    private final Random random = new Random();
 
-    ArrayList<LinkedList<Edge>> adjacency;
-    ArrayList<LinkedList<Arc>> inAdjacency;
-    ArrayList<LinkedList<Arc>> outAdjacency;
+    public final ArrayList<LinkedList<Edge>> adjacency = new ArrayList<>();      // Non oriente
+    public final ArrayList<LinkedList<Arc>> inAdjacency = new ArrayList<>();    // oriente
+    public final ArrayList<LinkedList<Arc>> outAdjacency = new ArrayList<>();   // oriente
 
     public Graph(int upperBound) {
-        // à remplir
+        order=upperBound;
+        edgeCardinality=0;
+        for(int i=0;i<order;i++) {
+            adjacency.add(new LinkedList<>());
+            inAdjacency.add(new LinkedList<>());
+            outAdjacency.add(new LinkedList<>());
+        }
     }
-
     public boolean isVertex(int index) {
-        // à remplir
-        return true;
+        return index<order;
     }
-
     public void addVertex(int indexVertex) {
-        // à remplir
+        if(isVertex(indexVertex)) {
+            adjacency.add(new LinkedList<>());
+        }
     }
-
-    public void ensureVertex(int indexVertex) {
-        // à remplir
+    public void ensureVertex(int indexVertex) {}
+    public void setRandomWeight() {
+        for(LinkedList<Edge> list : adjacency)
+            for(Edge e : list) e.weight = random.nextDouble();
     }
-
     public void addArc(Arc arc) {
-        // à remplir
+        if(isVertex(arc.getSource()) && isVertex(arc.getDest())) {
+            outAdjacency.get(arc.getSource()).add(arc);
+            inAdjacency.get(arc.getDest()).add(arc);
+        }
     }
-
     public void addEdge(Edge e) {
-        // à remplir
+        if(isVertex(e.source) && isVertex(e.dest)) {
+            adjacency.get(e.source).add(e);
+            addArc(new Arc(e,false));
+            addArc(new Arc(e,true));
+        }
     }
-
-    public Arc[] outNeighbours(int sommet) {
-        // à remplir
-        return outAdjacency.get(sommet).toArray(new Arc[0]);
+    public LinkedList<Arc> outNeighbours(int sommet) {
+        if(!isVertex(sommet)) return new LinkedList<>();
+        return outAdjacency.get(sommet);
    }
-
 }

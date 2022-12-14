@@ -1,11 +1,8 @@
 package GraphClasses;
 
 import Graph.*;
-
 public class Complete {
-
     public Graph graph;
-
     public Complete(int order) {
         this.graph = new Graph(order);
         for (int i = 0; i < order; i++)
@@ -13,5 +10,4 @@ public class Complete {
                 graph.addEdge(new Edge(i, j, 0));
 
     }
-
 }

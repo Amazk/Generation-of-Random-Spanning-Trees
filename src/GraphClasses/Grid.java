@@ -2,28 +2,20 @@ package GraphClasses;
 import Graph.*;
 
 import java.util.BitSet;
-
-
 public class Grid {
-
     public int width;
     public int height;
     int maxVertex;
-
     public Graph graph;
-
     public int abscissaOfVertex(int vertex) {
         return vertex % width;
     }
-
     public int ordinateOfVertex(int vertex) {
         return vertex / width;
     }
-
     private int vertexOfCoordinate(int abscissa, int ordinate) {
         return ordinate * width + abscissa;
     }
-
     public Grid(int width, int height) {
         this.width = width;
         this.height = height;
@@ -45,19 +37,13 @@ public class Grid {
                     ));
             }
         }
-
     }
-
-
     public boolean isHorizontal(Edge e) {
         return Math.abs(e.source - e.dest) == 1;
     }
-
     public boolean isVertical(Edge e) {
         return Math.abs(e.source - e.dest) == width;
     }
-
-
     private void drawLine(int h, BitSet right) {
         for (int i = 0; i < width - 1; i++) {
             System.out.print("o");
@@ -66,7 +52,6 @@ public class Grid {
         }
         System.out.println("o");
     }
-
     private void drawInterline(int h, BitSet up) {
         for (int i = 0; i < width; i++) {
             if (up.get(vertexOfCoordinate(i, h))) System.out.print("|");
@@ -75,7 +60,6 @@ public class Grid {
         }
         System.out.println();
     }
-
     public void drawSubgrid(Iterable<Edge> edges) {
         BitSet up = new BitSet(maxVertex);
         BitSet right = new BitSet(maxVertex);
@@ -91,8 +75,5 @@ public class Grid {
             drawLine(j, right);
             if (j < height - 1) drawInterline(j, up);
         }
-
     }
-
-
 }
